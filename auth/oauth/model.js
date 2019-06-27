@@ -79,6 +79,7 @@ module.exports = {
         {name: 'token', value: token},
       ]
     })
+    if(!token) return false
     return new Promise(resolve => resolve(db.token))
   },
   saveAuthorizationCode: (code, client, user) => {

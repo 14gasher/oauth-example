@@ -13,7 +13,15 @@
                           |_|           
 ```
 
-### Installation and Setup
+# Table of Contents
+
+1. [Installation and Setup](#install)
+1. [Important Links](#links)
+1. [Flow](#flow)
+  - [Overview](#flow-overview)
+
+<a id='install'></a>
+# Installation and Setup
 
 1. Clone this Repo
 1. `cd` into the project root folder, and run `yarn`
@@ -22,7 +30,32 @@
 1. Run `yarn authServer` to boot up the oauth 2.0 server
 1. Run `yarn webServer` to boot up the test web server
 
-### Tutorials
-[Express + Oauth 2.0](https://tech.zilverline.com/2017/03/17/nodejs-oauth2-provider)
+<a id='links'></a>
+# Important Links
+Checkout
+[Oauth-server-github](https://github.com/oauthjs/node-oauth2-server)
+if you are running into any weird errors. Tutorials are seriously lacking
+on this implementation of the Oauth2.0 protocol as most people use
+an external service for it. Luckily, the errors are pretty specific,
+so you can go through their code to figure out what is happening.
 
-[Express-Oath-Server](https://github.com/oauthjs/express-oauth-server/blob/master/examples/postgresql/index.js)
+Also, if you want to see how the middleware is generated, checkout
+[this](https://github.com/oauthjs/express-oauth-server)
+to see the middleware stuff. Their examples are out of date, so
+ignore them.
+
+<a id='flow'></a>
+# Flow
+Alright, this is where we will write a more comprehensive tutorial
+on how to do authorization grant styled oauth 2 than I was able to
+find. First, we will cover an overview of what the protocol says,
+then dive into detail with each of the sections.
+
+<a id='flow-overview'></a>
+### Overview
+First, some definitions:
+- *Client*: The application wanting to have access to your resources
+- *User*: The person wanting to use your resources on the Client
+- *Authorization*: The process of determining whether something has access to protected resources
+- *Authentication*: The process of determining a person's identity.
+- *OAuth2.0*:
