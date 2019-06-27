@@ -4,8 +4,22 @@
   "description": "An example of how oauth works",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "authServer": "node auth/app.js",
+    "devAuth": "npx nodemon auth/app.js"
   },
   "author": "Asher",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-oauth-server": "^2.0.0",
+    "nodemon": "^1.19.1",
+    "oauth2-server": "^3.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.1.4"
+  }
 }
