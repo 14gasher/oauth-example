@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Get Authorization Code</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class='container'>
+  <h1>Authentication</h1>
+  <form action='/oauth/authorize' method="post">
+    <div class="form-group">
+      <label>Username</label>
+      <input class='form-control' type="text" name="client_id" value="">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input class='form-control' type="text" name="client_secret" value="">
+    </div>
+    <div class="form-group">
+      <label>Redirect Uri</label>
+      <input class='form-control' type="text" name="redirect_uri" value="http://localhost:3030/oauth/token" />
+    </div>
+    <input type='submit' class='btn btn-success' />
+  </form>
+</body>
+</html>

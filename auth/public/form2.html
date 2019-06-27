@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Get Token</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class='container'>
+  <h1>Authentication</h1>
+  <button onclick = 'onClick()' class='btn btn-success' >Get Token</button>
+  <p>Authorization Code: <span id='code'></span></p>
+  <p>Token: <span id='token'></span></p>
+  <button onclick='accessSecretArea()' class='btn btn-danger'>Access Secret Area</button>
+  <p>Success? <span id='success'></span></p>
+
+  <script>
+  let code
+  let token // TODO: DON'T STORE THE TOKEN ON THE CLIENT FRONT END!!! Put it in a session cookie or something to be more secure
+  (function(){
+    const urlParams = new URLSearchParams(window.location.search) // retrieve the authorization code from the url
+    code = urlParams.get('code')
+    document.getElementById('code').innerText = code
+  }())
+  function onClick() {
+
+    fetch('/oauth/token', {
+      method: 'POST',
+      body: `code=${code}`, // this is how we send that code up
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log('Credentials', res)
+        token = res.access_token
+        document.getElementById('token').innerText = token
+      })
+  }
+
+  function accessSecretArea() {
+    const authorization = `Bearer ${token}`
+    console.log('Bearer token:', authorization)
+    fetch('/secure/', {
+      headers: new Headers({
+        Authorization: authorization,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => {
+        document.getElementById('success').innerText = res.success ? 'Oh yeah, baby!' : 'Nope.'
+      })
+      .catch(e => {
+        console.error('Fail:',e)
+        document.getElementById('success').innerText = 'Nope.'
+      })
+
+  }
+  </script>
+</body>
+</html>
