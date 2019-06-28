@@ -16,6 +16,7 @@
   <script>
   let code
   let token // TODO: DON'T STORE THE TOKEN ON THE CLIENT FRONT END!!! Put it in a session cookie or something to be more secure
+  let tokenType
   (function(){
     const urlParams = new URLSearchParams(window.location.search) // retrieve the authorization code from the url
     code = urlParams.get('code')
@@ -34,12 +35,13 @@
       .then(res => {
         console.log('Credentials', res)
         token = res.access_token
+        tokenType = res.token_type
         document.getElementById('token').innerText = token
       })
   }
 
   function accessSecretArea() {
-    const authorization = `Bearer ${token}`
+    const authorization = `${tokenType} ${token}`
     console.log('Bearer token:', authorization)
     fetch('/secure/', {
       headers: new Headers({

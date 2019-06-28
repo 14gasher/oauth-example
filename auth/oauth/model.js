@@ -79,7 +79,7 @@ module.exports = {
         {name: 'token', value: token},
       ]
     })
-    if(!token) return false
+    if(!token || token === 'undefined') return false
     return new Promise(resolve => resolve(db.token))
   },
   saveAuthorizationCode: (code, client, user) => {
@@ -110,7 +110,6 @@ module.exports = {
         {name: 'authorizationCode', value: authorizationCode},
       ],
     })
-    console.log('returning:', db.authorizationCode)
     return new Promise(resolve => {
       resolve(db.authorizationCode)
     })
@@ -148,7 +147,7 @@ module.exports = {
 }
 
 function log({title,parameters}) {
-  console.log(title)
+  console.log(`\n${title}`)
   console.group()
   parameters.forEach(p => console.log(`${p.name}:`, p.value))
   console.groupEnd()

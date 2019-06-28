@@ -6,8 +6,6 @@ const oauthServer = require('../oauth/server.js')
 const router = express.Router() // Instantiate a new router
 
 router.get('/authorize', (req,res) => {  // send back a simple form for the oauth
-  // The following fields need to be present:
-  // client_id,
   res.sendFile(path.join(__dirname, '../public/form.html'))
 })
 
