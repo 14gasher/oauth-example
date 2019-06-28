@@ -22,6 +22,11 @@
     - [1. Authorization](#flow-authorization)
     - [2. Token](#flow-token)
     - [3. Authentication](#flow-authentication)
+1. [Database](#database)
+    - [Client](#database-authorization)
+    - [User](#database-user)
+    - [Authorization Code](#database-code)
+    - [Token](#database-token)
 
 <a id='install'></a>
 # Installation and Setup
@@ -139,3 +144,55 @@ After hitting an authenticate url, the following calls are made within the model
 If you want to access this information in your routes, it is found in `res.locals.oauth.token`, so you immediately have access to the client and user information associated with the token.
 
 [back](#top)
+
+<a id='database'></a>
+# Database
+
+There are four tables that should be stored in the database:
+
+- Client
+- User
+- Authorization Code
+- Token
+
+The server will make use of the stored value in these for authorization and authentication purposes. Ideally, the database system used would be promise-based such that they can just be returned. If this is not available, you can make use of the callback parameter in each of the model functions.
+
+<a id='database-client'></a>
+### Client
+
+This stores information on the client.
+
+- id: unsigned long primary key auto_increment. // For Relations
+- client_id: String unique  // Client knows
+- client_secret: String  // Client knows
+- data_uris: [String] // Array of acceptable redirect locations
+- grants: [String] // Array of grants client has access to (authorization_code being one)
+
+<a id='database-user'></a>
+### User
+
+This stores information about the user.
+
+- id: unsigned long primary key auto_increment. // For Relations
+- Anything else you want / need for your server
+
+<a id='database-code'></a>
+### Authorization Code
+
+This stores information related to the authorization code
+
+- authorization_code: String primary key // string with a valid code
+- expires_at: Date // When the code expires
+- redirect_uri: String // String with a valid uri
+- client_id: unsigned long references Client(id)
+- user_id: unsigned long references User(id)
+
+<a id='database-token'></a>
+### Token
+
+This stores information related to your tokens
+
+- access_token: String primary key // string with a valid access token
+- access_token_expires_at: Date // When token expires
+- client_id: unsigned long references Client(id)
+- user_id: unsigned long references User(id)
