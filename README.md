@@ -27,7 +27,7 @@
     - [User](#database-user)
     - [Authorization Code](#database-code)
     - [Token](#database-token)
-1. [URL Queries](#urls)
+1. [URL Queries](#url)
     - [Authorization Code](#url-code)
     - [Token](#url-token)
     - [Access Protected Resource](#url-resource)
@@ -201,7 +201,7 @@ This stores information related to your tokens
 - client_id: unsigned long references Client(id)
 - user_id: unsigned long references User(id)
 
-<a id='url'>
+<a id='url'></a>
 # URL Queries and Formatting
 
 Once everything is set up the way you want it, you are ready to start making requests to the server. As a reminder, there are three categories of requests that are possible:
