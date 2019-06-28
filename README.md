@@ -134,6 +134,8 @@ Use the token type and token code to add an authorization header like this: `${t
 
 After hitting an authenticate url, the following calls are made within the model object in this order:
 
-1. `getAccessToken`: using the token code provided by the client, return the token, client, and user associated with the token code. If not valid, return false. If you want to access this information in your routes, it is found in `res.locals.oauth.token`, so you immediately have access to the client and user information associated with the token.
+1. `getAccessToken`: using the token code provided by the client, return the token, client, and user associated with the token code. If not valid, return false.
+
+If you want to access this information in your routes, it is found in `res.locals.oauth.token`, so you immediately have access to the client and user information associated with the token.
 
 [back](#top)

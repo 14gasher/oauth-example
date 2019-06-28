@@ -23,8 +23,11 @@ router.post('/authorize', (req,res, next) => { // sends us to our redirect with 
   return next()
 }, oauthServer.authorize({
   authenticateHandler: {
-    handle: () => {
+    handle: req => {
       console.log('Authenticate Handler Called')
+      console.group()
+      console.log('some_other_user_info_stuff:', req.body.some_other_user_info_stuff)
+      console.groupEnd()
       return {userId: 1}
     }
   }
@@ -40,7 +43,7 @@ router.post('/token', (req,res,next) => {
   req.body.grant_type = 'authorization_code'
   next()
 },oauthServer.token({
-  requireClientAuthentication: {
+  requireClientAuthentication: { // whether client needs to provide client_secret
     // 'authorization_code': false,
   },
 }))  // Sends back token

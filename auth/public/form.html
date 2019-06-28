@@ -9,16 +9,20 @@
   <h1>Authentication</h1>
   <form action='/oauth/authorize' method="post">
     <div class="form-group">
-      <label>Username</label>
+      <label>client_id</label>
       <input class='form-control' type="text" name="client_id" value="">
     </div>
     <div class="form-group">
-      <label>Password</label>
+      <label>client_secret</label>
       <input class='form-control' type="text" name="client_secret" value="">
     </div>
     <div class="form-group">
-      <label>Redirect Uri</label>
+      <label>redirect_uri</label>
       <input class='form-control' type="text" name="redirect_uri" value="http://localhost:3030/oauth/token" />
+    </div>
+    <div class="form-group">
+      <label>some_other_user_info_stuff</label>
+      <input class='form-control' type="text" name="some_other_user_info_stuff" />
     </div>
     <input type='submit' class='btn btn-success' />
   </form>
