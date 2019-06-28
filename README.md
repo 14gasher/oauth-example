@@ -12,7 +12,7 @@
 |_____/_/\_\__,_|_| |_| |_| .__/|_|\___|
                           |_|           
 ```
-
+<a id='top'></a>
 # Table of Contents
 
 1. [Installation and Setup](#install)
@@ -32,6 +32,8 @@
 1. Run `yarn authServer` to boot up the oauth 2.0 server
 1. Run `yarn devAuth` to boot up the oauth 2.0 server in dev mode. This will enable hot reloading when your code changes.
 
+[back](#top)
+
 <a id='links'></a>
 # Important Links
 Checkout
@@ -46,12 +48,16 @@ Also, if you want to see how the middleware is generated, checkout
 to see the middleware stuff. Their examples are out of date, so
 ignore them.
 
+[back](#top)
+
 <a id='flow'></a>
 # Flow
 Alright, this is where we will write a more comprehensive tutorial
 on how to do authorization grant styled oauth 2 than I was able to
 find. First, we will cover an overview of what the protocol says,
 then dive into detail with each of the sections.
+
+[back](#top)
 
 <a id='flow-overview'></a>
 ### 0. Overview
@@ -83,6 +89,8 @@ are added to the `model` object within the OAuth server.
 
 Now, we will explore each of the above 3 areas in depth.
 
+[back](#top)
+
 <a id='flow-authorization'></a>
 ### 1. Authorization
 
@@ -94,6 +102,8 @@ the model object in this order:
 1. `saveAuthorizationCode`: This will give you an authorization code, the retrieved Client Object from `getClient`, and the user from the `authenticateHandler`. This information needs to be stored in your database. Once stored, return the information
 
 After making the above calls, the server redirects you to the provided `redirect_uri` with the authorization code present as a url query parameter.
+
+[back](#top)
 
 <a id='flow-token'></a>
 ### 2. Token
@@ -115,6 +125,8 @@ The token is then sent as a json response like this:
 }
 ```
 
+[back](#top)
+
 <a id='flow-authentication'></a>
 ### 3. Authentication
 
@@ -123,3 +135,5 @@ Use the token type and token code to add an authorization header like this: `${t
 After hitting an authenticate url, the following calls are made within the model object in this order:
 
 1. `getAccessToken`: using the token code provided by the client, return the token, client, and user associated with the token code. If not valid, return false. If you want to access this information in your routes, it is found in `res.locals.oauth.token`, so you immediately have access to the client and user information associated with the token.
+
+[back](#top)
