@@ -18,6 +18,8 @@
   let code
   let token // TODO: DON'T STORE THE TOKEN ON THE CLIENT FRONT END!!! Put it in a session cookie or something to be more secure
   let tokenType
+  const secret = 'MY SECRET' // probs shouldn't be stored locally on the frontend
+  const id = 'MY ID'  // probs shouldn't be stored locally on the frontend
   (function(){
     const urlParams = new URLSearchParams(window.location.search) // retrieve the authorization code from the url
     code = urlParams.get('code')
@@ -27,9 +29,9 @@
 
     fetch('/oauth/token', {
       method: 'POST',
-      body: `code=${code}`, // this is how we send that code up
+      body: `code=${code}&client_secret=${secret}&client_id=${id}`, // this is how we send that data up
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded',  // This is REALLY important
       },
     })
       .then(res => res.json())

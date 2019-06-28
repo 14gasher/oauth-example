@@ -17,9 +17,6 @@ router.get('/token', (req,res) => {
 
 router.post('/authorize', (req,res, next) => { // sends us to our redirect with an authorization code in our url
   console.log('\n\n\nStart Authorization Flow\n\n\n')
-  Object.assign(req.query, {
-    response_type: 'code' // we want a code, not a refresh token
-  })
   return next()
 }, oauthServer.authorize({
   authenticateHandler: {
@@ -35,8 +32,7 @@ router.post('/authorize', (req,res, next) => { // sends us to our redirect with 
 
 router.post('/token', (req,res,next) => {
   console.log('\n\n\nStart Token Flow\n\n\n')
-  const code = req.body.code
-  // Search in db for this code
+  const code = req.body.code   // Search in db for this code
   req.body.client_id = 'test'
   req.body.client_secret = 'test'
 

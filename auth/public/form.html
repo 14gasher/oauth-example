@@ -7,14 +7,10 @@
 </head>
 <body class='container'>
   <h1>Authentication</h1>
-  <form action='/oauth/authorize' method="post">
+  <form action='/oauth/authorize?response_type=code' method="post">
     <div class="form-group">
       <label>client_id</label>
       <input class='form-control' type="text" name="client_id" value="">
-    </div>
-    <div class="form-group">
-      <label>client_secret</label>
-      <input class='form-control' type="text" name="client_secret" value="">
     </div>
     <div class="form-group">
       <label>redirect_uri</label>

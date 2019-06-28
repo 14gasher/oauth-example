@@ -27,13 +27,17 @@
     - [User](#database-user)
     - [Authorization Code](#database-code)
     - [Token](#database-token)
+1. [URL Queries](#urls)
+    - [Authorization Code](#url-code)
+    - [Token](#url-token)
+    - [Access Protected Resource](#url-resource)
 
 <a id='install'></a>
 # Installation and Setup
 
 1. Clone this Repo
 1. `cd` into the project root folder, and run `yarn`
-  - If `yarn` is not installed, install it and then run `yarn`
+    - If `yarn` is not installed, install it and then run `yarn`
 1. Run `yarn authServer` to boot up the oauth 2.0 server
 1. Run `yarn devAuth` to boot up the oauth 2.0 server in dev mode. This will enable hot reloading when your code changes.
 
@@ -196,3 +200,58 @@ This stores information related to your tokens
 - access_token_expires_at: Date // When token expires
 - client_id: unsigned long references Client(id)
 - user_id: unsigned long references User(id)
+
+<a id='url'>
+# URL Queries and Formatting
+Once everything is set up the way you want it, you are ready to start making requests to the server. As a reminder, there are three categories of requests that are possible:
+
+1. Get Authorization Code
+1. Get Token
+1. Get Access to Protected Resource
+
+This section will outline how each of these requests ought to be formatted to successfully go through.
+
+<a id='url-code'></a>
+### Authorization Code
+
+The request for an authorization code requires the following information:
+
+- client_id // The unique string identifying a client
+- redirect_uri // The place to redirect after receiving the code
+- response_type // what the client is expecting. Should be `code`
+
+These parameters can be included within the body of a POST request, or be sent as URL Query Parameters like this: `/request/authorization?client_id=<ID>&redirect_uri=<URL>&response_type=code`
+
+You can additionally send up other information to help validate the user within the authentication handler.
+
+You know this has handled things successfully when you redirect to the uri you provided.
+
+<a id='url-token'></a>
+### Token
+
+The request for an access token requires the following information:
+
+- client_id // Unique string of client
+- client_secret (if applicable) // client secret key
+- grant_type // authorization_code in this example
+
+The request should additionally have the following header:
+
+`'Content-Type': 'application/x-www-form-urlencoded'`
+
+and the data should be provided within the body of a post request.
+
+This will send back a json response as outlined earlier.
+
+<a id='url-resource'></a>
+### Access Protected Resource
+
+Requesting access to protected resources consists of making the request as usual, but adding the following header:
+
+```js
+{
+  Authorization: `${tokenType} ${token}`,
+}
+```
+
+with the tokenType and token coming from the json response in the token request.
