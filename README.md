@@ -161,6 +161,8 @@ There are four tables that should be stored in the database:
 
 The server will make use of the stored value in these for authorization and authentication purposes. Ideally, the database system used would be promise-based such that they can just be returned. If this is not available, you can make use of the callback parameter in each of the model functions.
 
+[back](#top)
+
 <a id='database-client'></a>
 ### Client
 
@@ -172,6 +174,8 @@ This stores information on the client.
 - data_uris: [String] // Array of acceptable redirect locations
 - grants: [String] // Array of grants client has access to (authorization_code being one)
 
+[back](#top)
+
 <a id='database-user'></a>
 ### User
 
@@ -179,6 +183,8 @@ This stores information about the user.
 
 - id: unsigned long primary key auto_increment. // For Relations
 - Anything else you want / need for your server
+
+[back](#top)
 
 <a id='database-code'></a>
 ### Authorization Code
@@ -191,6 +197,8 @@ This stores information related to the authorization code
 - client_id: unsigned long references Client(id)
 - user_id: unsigned long references User(id)
 
+[back](#top)
+
 <a id='database-token'></a>
 ### Token
 
@@ -200,6 +208,8 @@ This stores information related to your tokens
 - access_token_expires_at: Date // When token expires
 - client_id: unsigned long references Client(id)
 - user_id: unsigned long references User(id)
+
+[back](#top)
 
 <a id='url'></a>
 # URL Queries and Formatting
@@ -211,6 +221,8 @@ Once everything is set up the way you want it, you are ready to start making req
 1. Get Access to Protected Resource
 
 This section will outline how each of these requests ought to be formatted to successfully go through.
+
+[back](#top)
 
 <a id='url-code'></a>
 ### Authorization Code
@@ -226,6 +238,8 @@ These parameters can be included within the body of a POST request, or be sent a
 You can additionally send up other information to help validate the user within the authentication handler.
 
 You know this has handled things successfully when you redirect to the uri you provided.
+
+[back](#top)
 
 <a id='url-token'></a>
 ### Token
@@ -244,6 +258,8 @@ and the data should be provided within the body of a post request.
 
 This will send back a json response as outlined earlier.
 
+[back](#top)
+
 <a id='url-resource'></a>
 ### Access Protected Resource
 
@@ -256,3 +272,5 @@ Requesting access to protected resources consists of making the request as usual
 ```
 
 with the tokenType and token coming from the json response in the token request.
+
+[back](#top)
