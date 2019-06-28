@@ -18,9 +18,9 @@
   let code
   let token // TODO: DON'T STORE THE TOKEN ON THE CLIENT FRONT END!!! Put it in a session cookie or something to be more secure
   let tokenType
-  const secret = 'MY SECRET' // probs shouldn't be stored locally on the frontend
-  const id = 'MY ID'  // probs shouldn't be stored locally on the frontend
-  (function(){
+  const secret = 'MYSECRET' // probs shouldn't be stored locally on the frontend
+  const id = 'MYID'  // probs shouldn't be stored locally on the frontend
+  ;(function(){ // We are immediately executing this anonymous function. The semi-colon is necessary
     const urlParams = new URLSearchParams(window.location.search) // retrieve the authorization code from the url
     code = urlParams.get('code')
     document.getElementById('code').innerText = code

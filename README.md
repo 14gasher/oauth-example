@@ -203,6 +203,7 @@ This stores information related to your tokens
 
 <a id='url'>
 # URL Queries and Formatting
+
 Once everything is set up the way you want it, you are ready to start making requests to the server. As a reminder, there are three categories of requests that are possible:
 
 1. Get Authorization Code
