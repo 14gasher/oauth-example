@@ -17,11 +17,14 @@
 
 1. [Installation and Setup](#install)
 1. [Important Links](#links)
-1. [Flow](#flow)
-    - [0. Overview](#flow-overview)
-    - [1. Authorization](#flow-authorization)
-    - [2. Token](#flow-token)
-    - [3. Authentication](#flow-authentication)
+1. [Flows](#flow)
+    - Authorization Code Grant
+        - [0. Overview](#flow-overview)
+        - [1. Authorization](#flow-authorization)
+        - [2. Token](#flow-token)
+        - [3. Authentication](#flow-authentication)
+    - Refresh Token
+        - [0. Overview](#refresh-overview)
 1. [Database](#database)
     - [Client](#database-authorization)
     - [User](#database-user)
@@ -40,6 +43,8 @@
     - If `yarn` is not installed, install it and then run `yarn`
 1. Run `yarn authServer` to boot up the oauth 2.0 server
 1. Run `yarn devAuth` to boot up the oauth 2.0 server in dev mode. This will enable hot reloading when your code changes.
+1. Run `yarn test` to run unit tests that cover all implemented grants
+    - For verbose output, modify `level` in `auth/tests/setup.js` to be `DebugControl.levels.ALL`
 
 [back](#top)
 
@@ -68,8 +73,10 @@ then dive into detail with each of the sections.
 
 [back](#top)
 
+### Authorization Code Grant
+
 <a id='flow-overview'></a>
-### 0. Overview
+##### 0. Overview
 First, some definitions and reminders:
 - *Client*: The application wanting to have access to your resources
 - *User*: The person wanting to use your resources on the Client
@@ -101,7 +108,7 @@ Now, we will explore each of the above 3 areas in depth.
 [back](#top)
 
 <a id='flow-authorization'></a>
-### 1. Authorization
+##### 1. Authorization
 
 After hitting the Authorization url, the following calls are made within
 the model object in this order:
@@ -115,7 +122,7 @@ After making the above calls, the server redirects you to the provided `redirect
 [back](#top)
 
 <a id='flow-token'></a>
-### 2. Token
+##### 2. Token
 
 After hitting the token url, the following calls are made within the model object in this order:
 
@@ -137,7 +144,7 @@ The token is then sent as a json response like this:
 [back](#top)
 
 <a id='flow-authentication'></a>
-### 3. Authentication
+##### 3. Authentication
 
 Use the token type and token code to add an authorization header like this: `${token_type $token_code}`. This will allow the token to be transmitted securely.
 
@@ -148,6 +155,11 @@ After hitting an authenticate url, the following calls are made within the model
 If you want to access this information in your routes, it is found in `res.locals.oauth.token`, so you immediately have access to the client and user information associated with the token.
 
 [back](#top)
+
+<a id='refresh-overview'></a>
+### Refresh
+##### Overview
+The refresh token flow is one of the simplest of the grants. After any successful grant flow is completed and a token is generated, a refresh token is created along-side. If the refresh token is then returned with the other information, the client will be able to use the `refresh_token` with its `client_id`, `client_secret`, and `grant_type` of refresh_token in a post to the /token route to get access to a new valid token.
 
 <a id='database'></a>
 # Database
