@@ -22,6 +22,8 @@ const db = { // Here is a fast overview of what your db model should look like
   },
 }
 
+const DebugControl = require('../utilities/debug.js')
+
 module.exports = {
   getClient: function(clientId, clientSecret) {
     // query db for details with client
@@ -35,8 +37,8 @@ module.exports = {
     db.client = { // Retrieved from the database
       clientId: clientId,
       clientSecret: clientSecret,
-      grants: ['authorization_code'],
-      redirectUris: ['http://localhost:3030/secure', 'http://localhost:3030/oauth/token'],
+      grants: ['authorization_code', 'refresh_token'],
+      redirectUris: ['http://localhost:3030/oauth/token'],
     }
     return new Promise(resolve => {
       resolve(db.client)
@@ -65,6 +67,8 @@ module.exports = {
     db.token = {
       accessToken: token.accessToken,
       accessTokenExpiresAt: token.accessTokenExpiresAt,
+      refreshToken: token.refreshToken, // NOTE this is only needed if you need refresh tokens down the line
+      refreshTokenExpiresAt: token.refreshTokenExpiresAt,
       client: client,
       user: user,
     }
@@ -81,6 +85,28 @@ module.exports = {
     })
     if(!token || token === 'undefined') return false
     return new Promise(resolve => resolve(db.token))
+  },
+  getRefreshToken: token => {
+    /* Retrieves the token from the database */
+    log({
+      title: 'Get Refresh Token',
+      parameters: [
+        {name: 'token', value: token},
+      ],
+    })
+    DebugControl.log.variable({name: 'db.token', value: db.token})
+    return new Promise(resolve => resolve(db.token))
+  },
+  revokeToken: token => {
+    /* Delete the token from the database */
+    log({
+      title: 'Revoke Token',
+      parameters: [
+        {name: 'token', value: token},
+      ]
+    })
+    if(!token || token === 'undefined') return false
+    return new Promise(resolve => resolve(true))
   },
   saveAuthorizationCode: (code, client, user) => {
     /* This is where you store the access code data into the database */
@@ -147,8 +173,6 @@ module.exports = {
 }
 
 function log({title,parameters}) {
-  console.log(`\n${title}`)
-  console.group()
-  parameters.forEach(p => console.log(`${p.name}:`, p.value))
-  console.groupEnd()
+  DebugControl.log.functionName(title)
+  DebugControl.log.parameters(parameters)
 }

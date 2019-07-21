@@ -4,7 +4,8 @@
   "description": "An example of how oauth works",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx mocha auth/tests/**/*.js --exit",
+    "test-dev": "nodemon --exec 'yarn test || exit 1'",
     "authServer": "node auth/app.js",
     "devAuth": "npx nodemon auth/app.js"
   },
