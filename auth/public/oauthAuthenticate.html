@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>OAuth Authenticate</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class='container'>
+  <h1>Authentication On Our Server</h1>
+  <form action='/oauth/authorize' method="post">
+    <p>These inputs should be hidden in production</p>
+    <div class='form-group'>
+      <label>Client Id</label>
+      <input class='form-control' name='client_id'/>
+    </div>
+    <div class='form-group'>
+      <label>Redirect Uri</label>
+      <input class='form-control' name='redirect_uri'/>
+    </div>
+    <div class='form-group'>
+      <label>Response Type</label>
+      <input class='form-control' name='response_type'/>
+    </div>
+    <div class='form-group'>
+      <label>Grant Type</label>
+      <input class='form-control' name='grant_type'/>
+    </div>
+    <p>Any other inputs are used to help validate the client, run other custom actions on the server, etc...</p>
+    <div class="form-group">
+      <label>Username</label>
+      <input class='form-control' type="text" name="username" value="">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input class='form-control' type="text" name="password" value="" />
+    </div>
+    <input type='submit' class='btn btn-success' />
+  </form>
+  <script>
+  ;(function(){
+    const urlParams = new URLSearchParams(window.location.search)
+    ;['client_id','redirect_uri', 'response_type', 'grant_type'].forEach(type => {
+      const input = document.body.querySelector(`input[name=${type}]`)
+      const value = urlParams.get(type)
+      input.value = value
+    })
+  }())
+  </script>
+</body>
+</html>

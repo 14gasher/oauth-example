@@ -32,6 +32,15 @@ module.exports = {
       console.log(`VARIABLE ${name}:`, value)
       console.groupEnd()
       console.groupEnd()
+    },
+    request: () => (req,res,next) => {
+      if(levels.HIGH > level) return next()
+      console.log('Hit URL', req.url, 'with following:')
+      console.group()
+      console.log('Query:', req.query)
+      console.log('Body:', req.body)
+      console.groupEnd()
+      return next()
     }
   }
 }

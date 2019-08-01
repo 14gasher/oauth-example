@@ -7,13 +7,10 @@ const DebugControl = require('../utilities/debug.js')
 
 const router = express.Router() // Instantiate a new router
 
-router.get('/authorize', (req,res) => {  // send back a simple form for the oauth
-  res.sendFile(path.join(__dirname, '../public/form.html'))
+router.get('/', (req,res) => {  // send back a simple form for the oauth
+  res.sendFile(path.join(__dirname, '../public/oauthAuthenticate.html'))
 })
 
-router.get('/token', (req,res) => {
-  res.sendFile(path.join(__dirname, '../public/form2.html'))
-})
 
 router.post('/authorize', (req,res, next) => { // sends us to our redirect with an authorization code in our url
   DebugControl.log.flow('Authorization')

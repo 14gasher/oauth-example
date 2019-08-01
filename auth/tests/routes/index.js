@@ -18,7 +18,7 @@ let validData = {
 
 describe('/oauth', () => {
   const base = '/oauth'
-  describe('/authorize', () => {
+  describe('/', () => {
     const url = `${base}/authorize`
     describe('GET', () => {
       it('Should return a file', () => {
@@ -36,14 +36,14 @@ describe('/oauth', () => {
             client_id: 'test_client_id',
             some_other_user_info_stuff: 'test_user_info',
             response_type: 'code',
-            redirect_uri: 'http://localhost:3030/oauth/token',
+            redirect_uri: 'http://localhost:3030/client/app',
           })
           .then(res => {
             res.status.should.equal(200)
             res.redirects.should.be.an('array')
             res.redirects.length.should.equal(1)
             const newLocation = res.redirects[0]
-            const expectedBeginning = 'http://localhost:3030/oauth/token?code='
+            const expectedBeginning = 'http://localhost:3030/client/app?code='
             res.redirects[0].includes(expectedBeginning).should.be.true
             validData.code = newLocation.replace(expectedBeginning, '')
             validData.code.should.not.equal('')
@@ -54,15 +54,6 @@ describe('/oauth', () => {
 
   describe('/token', () => {
     const url = `${base}/token`
-    describe('GET', () => {
-      it('Should return a file', () => {
-        return chai.request(server)
-          .get(url)
-          .then(res => {
-            res.status.should.equal(200)
-          })
-      })
-    })
     describe('POST => authorization_code', () => {
       it('Should return an object with a valid token', () => {
         return chai.request(server)
