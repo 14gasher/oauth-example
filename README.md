@@ -66,10 +66,20 @@ ignore them.
 
 <a id='flow'></a>
 # Flow
-Alright, this is where we will write a more comprehensive tutorial
-on how to do authorization grant styled oauth 2 than I was able to
-find. First, we will cover an overview of what the protocol says,
-then dive into detail with each of the sections.
+First, some definitions and reminders:
+- *Client*: The application wanting to have access to your resources
+- *User*: The person wanting to use your resources on the Client
+- *Authorization*: The process of determining whether something has access to protected resources
+- *Authentication*: The process of determining a person's identity.
+- *OAuth2.0*: A protocol outlining how authorization should happen. It is NOT an authentication library. You will need to provide that yourself.
+
+Each of the grants provide a token which enables the user to access resources like the following diagram shows:
+
+1. Token is passed up in the authorization header
+2. Oauth Server validates the token
+3. Protected Resources are sent back down
+
+![Protected Resources](/resources/images/ProtectedResources.png)
 
 [back](#top)
 
@@ -77,12 +87,6 @@ then dive into detail with each of the sections.
 
 <a id='flow-overview'></a>
 ##### 0. Overview
-First, some definitions and reminders:
-- *Client*: The application wanting to have access to your resources
-- *User*: The person wanting to use your resources on the Client
-- *Authorization*: The process of determining whether something has access to protected resources
-- *Authentication*: The process of determining a person's identity.
-- *OAuth2.0*: A protocol outlining how authorization should happen. It is NOT an authentication library. You will need to provide that yourself.
 
 Aight, with those out of the way, we need to cover the basic flow with the authorization code grant.
 
@@ -98,6 +102,8 @@ Aight, with those out of the way, we need to cover the basic flow with the autho
     - Server validates request, and sends a token.
 3. Authentication
     - Client uses token to gain access to Server's protected resources
+
+![Authorization Code Grant Flow](/resources/images/AuthorizationCode.png)
 
 In the OAuth2.0 library, each of the above areas are handled within
 dedicated urls. Specific details on how to handle the different things
@@ -160,6 +166,8 @@ If you want to access this information in your routes, it is found in `res.local
 ### Refresh
 ##### Overview
 The refresh token flow is one of the simplest of the grants. After any successful grant flow is completed and a token is generated, a refresh token is created along-side. If the refresh token is then returned with the other information, the client will be able to use the `refresh_token` with its `client_id`, `client_secret`, and `grant_type` of refresh_token in a post to the /token route to get access to a new valid token.
+
+![Refresh Token Gran](/resources/images/RefreshToken.png)
 
 <a id='database'></a>
 # Database
