@@ -37,6 +37,7 @@ describe('/oauth', () => {
             some_other_user_info_stuff: 'test_user_info',
             response_type: 'code',
             redirect_uri: 'http://localhost:3030/client/app',
+            state: 'test_state',
           })
           .then(res => {
             res.status.should.equal(200)
@@ -45,6 +46,8 @@ describe('/oauth', () => {
             const newLocation = res.redirects[0]
             const expectedBeginning = 'http://localhost:3030/client/app?code='
             res.redirects[0].includes(expectedBeginning).should.be.true
+            const expectedState = 'state=test_state'
+            res.redirects[0].includes(expectedState).should.be.true
             validData.code = newLocation.replace(expectedBeginning, '')
             validData.code.should.not.equal('')
           })

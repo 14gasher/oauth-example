@@ -17,6 +17,9 @@
 
 1. [Installation and Setup](#install)
 1. [Important Links](#links)
+1. [Oauth2.0 Things to Know](#thingsToKnow)
+    - [State](#thingsToKnow-state)
+    - [Scope](#thingsToKnow-scope)
 1. [Flows](#flow)
     - Authorization Code Grant
         - [0. Overview](#flow-overview)
@@ -63,6 +66,18 @@ to see the middleware stuff. Their examples are out of date, so
 ignore them.
 
 [back](#top)
+
+<a id='thingsToKnow' />
+# Things To Know
+OAuth has a few parameters that are important to understand. Here is a list of good things to know:
+
+<a id='thingsToKnow-state' />
+### State
+State is an optional string provided by the client. It helps the client to protect against Cross Forgery requests and should not be used to transmit private data as it may be openly exposed and changed.
+
+<a id='thingsToKnow-scope' />
+### Scope
+
 
 <a id='flow'></a>
 # Flow

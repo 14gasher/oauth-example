@@ -25,6 +25,10 @@
       <label>Grant Type</label>
       <input class='form-control' name='grant_type'/>
     </div>
+    <div class='form-group'>
+      <label>State</label>
+      <input class='form-control' name='state'/>
+    </div>
     <p>Any other inputs are used to help validate the client, run other custom actions on the server, etc...</p>
     <div class="form-group">
       <label>Username</label>
@@ -39,7 +43,7 @@
   <script>
   ;(function(){
     const urlParams = new URLSearchParams(window.location.search)
-    ;['client_id','redirect_uri', 'response_type', 'grant_type'].forEach(type => {
+    ;['client_id','redirect_uri', 'response_type', 'grant_type', 'state'].forEach(type => {
       const input = document.body.querySelector(`input[name=${type}]`)
       const value = urlParams.get(type)
       input.value = value
