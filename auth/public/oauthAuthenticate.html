@@ -30,13 +30,17 @@
       <input class='form-control' name='state'/>
     </div>
     <p>Any other inputs are used to help validate the client, run other custom actions on the server, etc...</p>
+    <p>
+      The defaults for this will successfully login. Anything else will fail.
+      This behavior is <strong>NOT</strong> handled by OAuth, but must be included in your middleware.
+    </p>
     <div class="form-group">
       <label>Username</label>
-      <input class='form-control' type="text" name="username" value="">
+      <input class='form-control auth' type="text" name="username" value="username">
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input class='form-control' type="text" name="password" value="" />
+      <input class='form-control auth' type="text" name="password" value="password" />
     </div>
     <input type='submit' class='btn btn-success' />
   </form>
@@ -48,6 +52,10 @@
       const value = urlParams.get(type)
       input.value = value
     })
+    const error = urlParams.get('success') === 'false'
+    if(error) {
+      document.body.querySelectorAll('.auth').forEach(el => el.classList.add('is-invalid'))
+    }
   }())
   </script>
 </body>
