@@ -15,9 +15,6 @@ router.get('/', (req,res) => {  // send back a simple form for the oauth
 
 
 router.post('/authorize', (req,res,next) => {
-  if(req.query.success === 'false') {
-    return res.sendFile(filePath)
-  }
   DebugControl.log.flow('Initial User Authentication')
   const {username, password} = req.body
   if(username === 'username' && password === 'password') {
