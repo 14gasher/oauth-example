@@ -16,6 +16,11 @@ let validData = {
   refreshToken: '',
 }
 
+const userTypes = [
+  {valid: true, type:'valid', username: 'username', password: 'password'},
+  {valid: false, type:'invalid', username: 'user', password: 'pass'},
+]
+
 describe('/oauth', () => {
   const base = '/oauth'
   describe('/', () => {
@@ -28,29 +33,38 @@ describe('/oauth', () => {
       })
     })
     describe('POST', () => {
-      it('Should send a redirect to the proper location', () => {
-        return chai.request(server)
-          .post(url)
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-          .send({
-            client_id: 'test_client_id',
-            some_other_user_info_stuff: 'test_user_info',
-            response_type: 'code',
-            redirect_uri: 'http://localhost:3030/client/app',
-            state: 'test_state',
-          })
-          .then(res => {
-            res.status.should.equal(200)
-            res.redirects.should.be.an('array')
-            res.redirects.length.should.equal(1)
-            const newLocation = res.redirects[0]
-            const expectedBeginning = 'http://localhost:3030/client/app?code='
-            res.redirects[0].includes(expectedBeginning).should.be.true
-            const expectedState = 'state=test_state'
-            res.redirects[0].includes(expectedState).should.be.true
-            validData.code = newLocation.replace(expectedBeginning, '')
-            validData.code.should.not.equal('')
-          })
+      userTypes.forEach(user => {
+        it(`${user.type} user should${user.valid ? '' : ' not'} send a redirect to the proper location`, () => {
+          return chai.request(server)
+            .post(url)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .send({
+              client_id: 'test_client_id',
+              response_type: 'code',
+              redirect_uri: 'http://localhost:3030/client/app',
+              state: 'test_state',
+              username: user.username,
+              password: user.password,
+            })
+            .then(res => {
+              res.status.should.equal(200)
+              res.redirects.should.be.an('array')
+              res.redirects.length.should.equal(1)
+              const newLocation = res.redirects[0]
+
+              if(user.valid) {
+                const beginning = 'http://localhost:3030/client/app?code='
+                newLocation.should.include(beginning)
+                const expectedState = 'state=test_state'
+                newLocation.should.include(expectedState)
+                validData.code = newLocation.replace(beginning, '')
+                validData.code.should.not.equal('')
+              } else {
+                newLocation.should.include('/oauth')
+                newLocation.should.include('success=false')
+              }
+            })
+        })
       })
     })
   })
