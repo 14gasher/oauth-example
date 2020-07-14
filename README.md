@@ -67,15 +67,15 @@ ignore them.
 
 [back](#top)
 
-<a id='thingsToKnow' />
+<a id='thingsToKnow'></a>
 # Things To Know
 OAuth has a few parameters that are important to understand. Here is a list of good things to know:
 
-<a id='thingsToKnow-state' />
+<a id='thingsToKnow-state'></a>
 ### State
 State is an optional string provided by the client. It helps the client to protect against Cross Forgery requests and should not be used to transmit private data as it may be openly exposed and changed.
 
-<a id='thingsToKnow-scope' />
+<a id='thingsToKnow-scope'></a>
 ### Scope
 
 
