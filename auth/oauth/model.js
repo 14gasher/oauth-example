@@ -108,7 +108,7 @@ module.exports = {
     if (!token || token === 'undefined') return false
     return new Promise(resolve => resolve(true))
   },
-  generateAuthorizationCode: (client, user, scope) => {
+  generateAuthorizationCode: (client, user, scope, callback) => {
     /* 
     For this to work, you are going have to hack this a little bit:
     1. navigate to the node_modules folder
@@ -135,12 +135,13 @@ module.exports = {
       ],
     })
 
+    const err = null;
     const seed = crypto.randomBytes(256)
     const code = crypto
       .createHash('sha1')
       .update(seed)
       .digest('hex')
-    return code
+    return callback(err, code);
   },
   saveAuthorizationCode: (code, client, user) => {
     /* This is where you store the access code data into the database */
